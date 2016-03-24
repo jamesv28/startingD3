@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/libs/d3.js"></script>
+    <style>
+        .container {
+            width: 50%;
+            height: 50%;
+            position: fixed;
+            top: 25%;
+            left: 25%;
+        }
+        div.bar {
+            display: inline-block;
+            width: 10px;
+            height: 75px; /* We'll override height later */
+            background-color: teal;
+            margin-right: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+</div>
+<script type="text/javascript">
+    var dataset = [ 25, 7, 5, 26, 11, 8, 25, 14, 23, 19, 14, 11, 22, 29, 11, 13, 12, 17, 18, 10,
+        24, 18, 25, 9, 3 ];
+
+    d3.select('.container')
+            .selectAll('div')
+            .data(dataset)
+            .enter()
+            .append('div')
+            .attr('class','bar')
+            .style('height', function(d) {
+                return d * 10 + 'px';
+            });
+</script>
+</body>
+</html>

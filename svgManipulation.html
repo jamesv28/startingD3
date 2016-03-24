@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3 | drawing SVG's</title>
+    <script src="js/libs/d3.js"></script>
+    <style>
+        .container {
+            width: 50%;
+            height: 50%;
+            position: relative;
+            margin-top: 25%;
+            left: 25%;
+        }
+        .newBar {
+            padding-top: 50px;
+            margin-left: 25%;
+            position: relative;
+        }
+        div.bar {
+            display: inline-block;
+            width: 10px;
+            height: 75px; /* We'll override height later */
+            background-color: teal;
+            margin-right: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- graph goes here -->
+</div>
+<div class="newBar">
+    <!-- new version of bar chart -->
+</div>
+
+<script type="text/javascript">
+    //select the div with a class of container and append an svg
+    var svg = d3.select('.container').append('svg');
+    var w = 500;
+    var h = 50;
+
+    var dataset = [ 5, 10, 15, 20, 25 ];
+
+    svg.attr('height', h)
+            .attr('width', w);
+
+    var circles = svg.selectAll("circle") .data(dataset)
+            .enter()
+            .append("circle");
+    /**
+     * cx is the center position of the circle
+     */
+    circles.attr("cx", function(d, i) {
+        return (i * 50) + 25;
+    })
+            .attr("cy", h/2)
+            .attr("r", function(d) {
+                //this makes the radius the number in the dataset
+                return d;
+            })
+            .attr('fill', 'purple')
+            .attr('stroke', 'blue')
+            .attr('stroke-width', function(d) {
+                //remember all parameters marked d refer to the data
+                return d/3;
+            });
+
+    var svg2 = d3.select('.newBar').append('svg')
+            .attr('width',w)
+            .attr('height',h);
+
+    svg2.selectAll('rect')
+            .data(dataset)
+            .enter()
+            .append('rect')
+            .attr('x',function(d,i){
+                return i * 21;
+            })
+            .attr('y', function(d) {
+                return h - d;
+            })
+            .attr('width', 20)
+            .attr('height', function(d) {
+                return (d * 4);
+            })
+            .attr('fill', function(d) {
+                return 'rgb(0,0, ' + (d * 10) + ')';
+            });
+</script>
+</body>
+</html>

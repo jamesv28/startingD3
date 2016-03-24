@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3.js | looking at domains and ranges</title>
+    <script src="js/libs/d3.js"></script>
+    <style>
+        .container {
+            width: 80vw;
+            height: 60vh;
+            margin-left: 10vw;
+            margin-top: 10vh;
+            background: #ffffff;
+        }
+        body {
+            background: darkgray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container"></div>
+
+<script type="text/javascript">
+
+    /**
+     * A scale’s input domain is the range of possible input data values.
+     * Given the preceding apples data, appropriate input domains would be either 100 and 500
+     * (the minimum and maximum values of the dataset) or 0 and 500.
+     */
+
+
+    /**
+     * Output range is the values (usually in pixels) that we want to
+     * display the data as.
+     */
+
+//    var scale = d3.scale.linear();
+
+    //below is the where i want the scale to start and stop
+//    scale.domain([100,500]);
+
+    //now how we want to visualize the data
+//    scale.range([10,350]);
+
+    var dataset = [
+    [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
+            [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
+    ];
+
+    console.log('biggest',d3.max(dataset, function(d) {
+        return d[0];
+    }));
+
+    //if there is a simple data set
+    var simpleDataset = [1,55,2,66];
+    console.log('simple data max', d3.max(simpleDataset));
+
+    var w = 500;
+    var h = 50;
+
+    var svg = d3.select('.container')
+            .append('svg')
+            .attr('width', w)
+            .attr('height', h);
+
+    svg.selectAll('circle')
+            .data(dataset)
+            .enter()
+            .append('circle')
+            .attr('cx', function(d) {
+                return d[0];
+            })
+            .attr('cy', function(d) {
+                return d[1];
+            })
+            .attr('r', function(d) {
+                return Math.floor(Math.sqrt(h - d[0]));
+            });
+
+    //create a horizontal scale
+    var xScale = d3.scale.linear()
+            .domain([0, d3.max(dataset, function(d) {
+                return d[0];
+            })])
+            .range([0,w]);
+
+
+
+</script>
+</body>
+</html>
